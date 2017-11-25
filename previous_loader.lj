@@ -1,0 +1,21 @@
+using DataFrames
+function data_loader(max_training_set)
+    main_data = readtable("train_test.csv", separator=',')
+    labels_train = main_data[1:max_training_set,3073] # all labels are here for training ##001-240
+    images_train = main_data[1:max_training_set,1:3072] # all images are here for training
+    labels_test = main_data[(max_training_set+1):300,3073] # all test_labels are here for testing ##241-300
+    images_test = main_data[(max_training_set+1):300,1:3072] # all images are here for testing
+    grades = ["grade-a","grade-b","grade-c","grade-d","grade-e","grade-f","grade-g","grade-h","grade-i"]
+#    return labels_train,images_train,labels_test,images_test,grades
+    data_dict = Dict(
+    "images_train"=> convert(images_train,zeros(Float32,240,3072)),
+    "labels_train"=> convert(labels_train,zeros(Float32,240,3072)),
+    "images_test"=> convert(images_test,zeros(Float32,60,3072)),
+    "labels_test"=> convert(labels_test,zeros(Float32,60,3072)),
+    "grades"=> convert(grades,fill("",9,1))  )
+    return data_dict
+end
+
+function batch_loader()
+    centent = 0
+end
